@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviour
     Camera _mainCamera;
     [SerializeField]GameObject _barrel;
     [SerializeField] GameObject _bullet;
-
+    [SerializeField] GameManager _gameManeger;
 
     float _moveVertical;
     float _moveHorizontal;
@@ -40,10 +40,17 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        RotatePlayer();
-        if (_isShooting)
-            StartCoroutine(Fire());
+        if (!_gameManeger._isGameOver)
+        {
+            MovePlayer();
+            RotatePlayer();
+            if (_isShooting)
+                StartCoroutine(Fire());
+        }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
     void MovePlayer()
     {
